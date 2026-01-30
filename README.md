@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Front Prueba V2
 
-## Getting Started
+Frontend para una prueba tecnica con catalogo de productos y flujo de compra con tarjeta.
 
-First, run the development server:
+## Funcionalidades
+
+- Catalogo paginado con estados de carga/errores.
+- Modal de compra en 3 pasos: monto + aceptacion de terminos, tokenizacion de tarjeta, confirmacion y compra.
+- Resumen e invoice de transaccion en `app/(pages)/transaction/[idInternalTransaction]`.
+- Calculo de impuesto fijo del 19% para el total.
+
+## Stack
+
+- Next.js 16 (App Router) + React 19
+- Tailwind CSS v4 + DaisyUI (tema custom)
+- React Query, React Hook Form, Zustand
+- Axios, React Hot Toast, React Icons
+
+## Variables de entorno
+
+Crea `.env.local` en la raiz:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
+NEXT_PUBLIC_KEY=pub_test_xxx
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`NEXT_PUBLIC_API_BASE_URL` define la base de la API para productos y transacciones.  
+`NEXT_PUBLIC_KEY` es la public key de (sandbox) para obtener el acceptance token.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API esperada
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Estos endpoints deben existir en el backend configurado en `NEXT_PUBLIC_API_BASE_URL`:
 
-## Learn More
+- `GET /products?page=&pageSize=&filter=`
+- `POST /cards/token`
+- `POST /transactions`
+- `GET /transactions/internal/:id`
 
-To learn more about Next.js, take a look at the following resources:
+Para los terminos y condiciones se consulta:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `GET https://api-sandbox.co.uat.wompi.dev/v1/merchants/{NEXT_PUBLIC_KEY}`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
+```bash
+npm run dev    # desarrollo
+npm run build  # build
+npm run start  # produccion
+npm run lint   # lint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Estructura rapida
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/components`: UI y pasos del flujo de compra
+- `app/services`: llamadas HTTP
+- `app/hooks`: hooks de React Query
+- `app/stores`: estado global con Zustand
