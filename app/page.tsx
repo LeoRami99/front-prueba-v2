@@ -1,5 +1,6 @@
 import CatalogProducts from "./components/catalogProducts";
 import Navbar from "./components/navbar";
+import Transaction from "./components/transaction";
 
 export default function Home() {
 	return (
@@ -10,6 +11,7 @@ export default function Home() {
 					<CatalogProducts />
 				</main>
 			</div>
+			<Transaction />
 		</>
 	);
 }
