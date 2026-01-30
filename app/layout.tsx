@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "./QueryProvider";
-
+import { Toaster } from "react-hot-toast";
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -26,6 +26,7 @@ export default function RootLayout({
 	return (
 		<html lang='en' data-theme='theme'>
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+				<Toaster position='top-center' reverseOrder={false} />
 				<QueryProvider>{children}</QueryProvider>
 			</body>
 		</html>
